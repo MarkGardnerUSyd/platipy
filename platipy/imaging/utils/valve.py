@@ -122,6 +122,9 @@ def generate_valve_using_cylinder(
         )
         overlap_vol = np.sum(sitk.GetArrayFromImage(overlap) * np.product(overlap.GetSpacing()))
         dilation += 1
+        if dilation > max(label_ventricle.GetSize()):
+            print('Failure to generate cylinder')
+            return -1
 
     # Now we can calculate the location of the valve
     valve_loc = get_com(overlap, as_int=True)
